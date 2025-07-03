@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Header = ({id, name}) => <h1 key={id}>{name}</h1>
+const Header = ({name}) => <h1>{name}</h1>
 
 const Content = ({course}) => {
   const courseID = course.id
@@ -11,7 +11,7 @@ const Content = ({course}) => {
   )
   const sum = parts.reduce((sum, part)=>sum+part.exercises,0)
 
-  // //these equals to 👆
+  // these equals to 👆
   // function sumO(parts) {
   //   let summ = 0
   //   for (let i=0; i<parts.length; i++){
@@ -19,11 +19,10 @@ const Content = ({course}) => {
   //   }
   //   return summ
   // }
-  // // const sum = sumO(parts)
+  // const sum = sumO(parts)
 
   return(
     <>
-      <Header id={courseID} name={courseName} />
       {partsDisplay}
       {/* <Part name={name} exercises={exercises} />
       <Part name={name} exercises={exercises} />
@@ -39,11 +38,11 @@ const Part = ({name, exercises}) => {
   )
 }
 
-const Course = () => {
+const Course = ({course}) => {
   return(
     <>
-      <Header />
-      <Content />
+      <Header name={course.name}/>
+      <Content course={course}/>
     </>
   )
 }
@@ -71,7 +70,7 @@ function App() {
     ]
   }
 
-  return <Content course={course} />
+  return <Course course={course} />
 }
 
 export default App
