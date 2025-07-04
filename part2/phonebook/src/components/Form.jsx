@@ -1,12 +1,13 @@
-function Form() {
+function Form({nameInput, numberInput, handleName, handleNumber, handleAdd}) {
     return(
-        <div>
-            <form>
-                <label for="name">name:</label>
-                <input name="note_input"></input>
-                <button>add</button>
-            </form>
-        </div>
+      <div>
+        <form onSubmit={handleAdd}>
+            <div>name: <input value={nameInput} onChange={handleName} /></div>
+            <div>number: <input value={numberInput} onChange={handleNumber}/></div>
+            <div><button type="submit">add</button></div>
+        </form>
+                
+      </div>
     )
 }
 
