@@ -8,8 +8,8 @@ function Display({searching, contacts}) {
         <div>
             <h1>Numbers</h1>
             {searching
-                ? <Person contacts={namesToShow}/>
-                : <Person contacts={contacts}/>
+                ? <Person contacts={namesToShow} />
+                : <Person contacts={contacts} />
             }
         </div>
     )

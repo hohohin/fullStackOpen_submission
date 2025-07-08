@@ -4,6 +4,8 @@ import Form from './components/Form'
 import Display from './components/Display'
 import Filter from './components/Filter'
 
+const baseUrl = 'http://localhost:3001/contacts'
+
 function App() {
   const [searching,setSearch] = useState('')
   const [nameInput, setNameInput] = useState('')
@@ -11,7 +13,7 @@ function App() {
   const [contacts, setContact] = useState([])
 
   useEffect(()=>{
-    axios.get('http://localhost:3001/contacts')
+    axios.get(baseUrl)
     .then(response=>{
       setContact(response.data)
     })
@@ -24,17 +26,29 @@ function App() {
 
   const handleAdd = (event) => {
     event.preventDefault()
-    console.log('contact added');
     const newContact = {
-      id: contacts.length + 1,
+      // id: (contacts.length + 1).toString(),
       name: nameInput,
       number: numberInput
     }
-    setContact(contacts.concat(newContact))
+    // setContact(contacts.concat(newContact))
+
+    axios.post(baseUrl, newContact)
+    .then(response=>{
+      alert(`${response.data.name} added!`)
+      setContact(contacts.concat(response.data))
+      // console.log(response.data);
+    })
+
     setNameInput('')
     setNumberInput('')
-    alert(`${newContact.name} added!`)
   }
+
+  // const handleDelete = (event) => {
+  //   console.log('delete clicked')
+  //   console.log(event);
+    
+  // }
 
   const handleName = (event) => {
     console.log(event.target.value)
@@ -56,7 +70,9 @@ function App() {
         handleName={handleName}
         handleNumber={handleNumber} 
         handleAdd={handleAdd}/>
-      <Display searching={searching} contacts={contacts}/>
+      <Display
+        searching={searching}
+        contacts={contacts}/>
     </div>
   )
 }
