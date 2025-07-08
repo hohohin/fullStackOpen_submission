@@ -11,6 +11,8 @@ function App() {
   const [nameInput, setNameInput] = useState('')
   const [numberInput,setNumberInput] = useState('')
   const [contacts, setContact] = useState([])
+  
+  const [change,setChange] = useState(true)
 
   useEffect(()=>{
     axios.get(baseUrl)
@@ -44,11 +46,17 @@ function App() {
     setNumberInput('')
   }
 
-  // const handleDelete = (event) => {
-  //   console.log('delete clicked')
-  //   console.log(event);
-    
-  // }
+  const handleDelete = (id) => {
+    const ptd = contacts.filter(contact=>contact.id === id)
+    if (window.confirm(`delete ${ptd[0].name}?`)){
+    axios.delete(`${baseUrl}/${id}`)
+    .then(respond=>{
+      // console.log(respond.data)
+      setContact(contacts.filter(contact=>contact.id != respond.data.id))
+      alert(`${respond.data.name} is deleted`)
+      }
+    )}
+  }
 
   const handleName = (event) => {
     console.log(event.target.value)
@@ -72,7 +80,8 @@ function App() {
         handleAdd={handleAdd}/>
       <Display
         searching={searching}
-        contacts={contacts}/>
+        contacts={contacts}
+        handleDelete={handleDelete} />
     </div>
   )
 }

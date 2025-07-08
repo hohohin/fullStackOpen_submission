@@ -1,6 +1,6 @@
 import Person from "./Person"
 
-function Display({searching, contacts}) {
+function Display({searching, contacts, handleDelete}) {
     // const namesToShow = names.filter(name => name.includes(searching))
     const namesToShow = contacts.filter(contact => 
         contact.name.toLowerCase().includes(searching))
@@ -8,8 +8,8 @@ function Display({searching, contacts}) {
         <div>
             <h1>Numbers</h1>
             {searching
-                ? <Person contacts={namesToShow} />
-                : <Person contacts={contacts} />
+                ? <Person contacts={namesToShow} handleDelete={handleDelete} />
+                : <Person contacts={contacts} handleDelete={handleDelete} />
             }
         </div>
     )
