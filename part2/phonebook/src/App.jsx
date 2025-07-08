@@ -11,8 +11,7 @@ function App() {
   const [nameInput, setNameInput] = useState('')
   const [numberInput,setNumberInput] = useState('')
   const [contacts, setContact] = useState([])
-  
-  const [change,setChange] = useState(true)
+
 
   useEffect(()=>{
     axios.get(baseUrl)
@@ -28,12 +27,40 @@ function App() {
 
   const handleAdd = (event) => {
     event.preventDefault()
+    //process name repetition
+    const possi_repe = contacts.find(contact=>contact.name === nameInput)
+    if (possi_repe) {
+      if(window.confirm(`${nameInput} is already added, renew the number?`)){
+        confirmChange(possi_repe)
+    }}
+    else if(nameInput === '' || numberInput ===''){
+      window.alert('contact name/number cannot be empty')
+    }
+    else{
+      confirmAdd()
+    }
+  }
+
+  const confirmChange = (repe_contact) => {
+    const newContact = {...repe_contact, number: numberInput}
+
+    axios.put(`${baseUrl}/${repe_contact.id}`, newContact)
+    .then(respond=>{
+      const renew = contacts.map(contact=>
+        contact.id === respond.data.id 
+        ? {...contact, number: respond.data.number}
+        : contact
+      )
+      setContact(renew)
+    })
+  }
+
+  const confirmAdd = () => {
     const newContact = {
       // id: (contacts.length + 1).toString(),
       name: nameInput,
       number: numberInput
     }
-    // setContact(contacts.concat(newContact))
 
     axios.post(baseUrl, newContact)
     .then(response=>{
