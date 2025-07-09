@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useActionState } from 'react'
 import axios from 'axios'
 import Form from './components/Form'
 import Display from './components/Display'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
+import './index.css'
 
 const baseUrl = 'http://localhost:3001/contacts'
+
 
 function App() {
   const [searching,setSearch] = useState('')
@@ -12,6 +15,26 @@ function App() {
   const [numberInput,setNumberInput] = useState('')
   const [contacts, setContact] = useState([])
 
+  const [message,setMessage] = useState(null)
+  const [msgtype,setType] = useState({backgroundcolor:'blue',color:'white'})
+
+  function blinkMessage(type,text) {
+    console.log('blinking',type,text,message);
+    
+    if(type==='good'){
+        setType({backgroundColor:'green', color:'yellowgreen'})
+    }
+    else if(type==='neutral'){
+      setType({backgroundColor:'lightgray', color:'gray'})
+    }
+    else{
+      setType({backgroundColor:'red', color:'yellow'})
+    }
+    setMessage(text)
+    setTimeout(() => {
+      setMessage(null)
+    }, 3000);
+  }
 
   useEffect(()=>{
     axios.get(baseUrl)
@@ -52,6 +75,10 @@ function App() {
         : contact
       )
       setContact(renew)
+      blinkMessage('good',`${respond.data.name}'s number is renewed`)
+    })
+    .catch(error=>{
+      blinkMessage('error',`Dude ${repe_contact.name} has already been deleted`)
     })
   }
 
@@ -64,7 +91,13 @@ function App() {
 
     axios.post(baseUrl, newContact)
     .then(response=>{
-      alert(`${response.data.name} added!`)
+      // alert(`${response.data.name} added!`)
+      // setType({backgroundColor:'green',color:'yellowgreen'})
+      // setMessage(`${response.data.name} added!`)
+      // setTimeout(() => {
+      //   setMessage(null)
+      // }, 3000);
+      blinkMessage('good',`${response.data.name} is added`)
       setContact(contacts.concat(response.data))
       // console.log(response.data);
     })
@@ -80,7 +113,8 @@ function App() {
     .then(respond=>{
       // console.log(respond.data)
       setContact(contacts.filter(contact=>contact.id != respond.data.id))
-      alert(`${respond.data.name} is deleted`)
+      // alert(`${respond.data.name} is deleted`)
+      blinkMessage('neutral',`${respond.data.name} is deleted`)
       }
     )}
   }
@@ -96,7 +130,7 @@ function App() {
 
   return(
     <div>
-      <h1>Phonebook</h1>
+      <h1>📱Phonebook</h1>
       <Filter searching={searching} handleSearch={handleSearch}/>
       <h2>add contact</h2>
       <Form 
@@ -105,6 +139,7 @@ function App() {
         handleName={handleName}
         handleNumber={handleNumber} 
         handleAdd={handleAdd}/>
+      <Notification text={message} style={msgtype}/>
       <Display
         searching={searching}
         contacts={contacts}
