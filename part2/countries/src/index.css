@@ -70,11 +70,22 @@ button:focus-visible {
   }
 }
 
-li{
+/* li{
   list-style: georgian;
   line-height: 2em;
-}
+} */
 
 .result{
   padding-top: 1em;
+}
+
+.smallist{
+  list-style: none;
+  font-size: small;
+}
+
+.matches{
+  list-style: none;
+  line-height: 2em;
+  padding: 2px;
 }
