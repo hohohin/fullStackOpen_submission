@@ -8,7 +8,6 @@ function App() {
   const [countriesName,setNames] = useState([])
 
   const handleSearch = (event) => {
-    const searching = event.target.value
     setSearch(event.target.value)
     // console.log(searching);
   }
@@ -24,7 +23,7 @@ function App() {
   return (
     <>
       <Search searching={search} handleSearch={handleSearch} />
-      <Display search={search} countriesName={countriesName} />
+      <Display search={search} countriesName={countriesName} getInfos={server.getInfos}/>
     </>
   )
 }
