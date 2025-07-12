@@ -11,9 +11,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-
-  place-items: center;
 }
 
 a {
@@ -31,17 +28,18 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  align-items: center;
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 3.2em;
   line-height: 1.1;
 }
 
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.2em 0.3em;
+  padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -70,22 +68,26 @@ button:focus-visible {
   }
 }
 
-/* li{
-  list-style: georgian;
-  line-height: 2em;
-} */
-
-.result{
-  padding-top: 1em;
+li{
+  list-style: none;
+  margin-top: 0.5em;
 }
 
-.smallist{
-  list-style: none;
-  font-size: small;
+input{
+  border-top: 3px #1a1a1a;
+  border-left: 0px;
+  border-right: 0px;
+  width: 80%;
+  height: 3em;
+  text-align: center;
+  background: none;
+  font-size: medium;
+  font-weight: 400;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
 }
 
-.matches{
-  list-style: none;
-  line-height: 2em;
-  padding: 2px;
+input:focus,
+input:focus-visible{
+  outline: none;
 }
