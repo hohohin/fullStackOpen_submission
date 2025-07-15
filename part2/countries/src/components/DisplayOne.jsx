@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import server from "../service/server"
+import server from "../services/server"
 
 function DisplayOne({name}) {
     const [info,setInfo] = useState(null)
