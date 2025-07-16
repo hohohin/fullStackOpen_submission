@@ -1,10 +1,13 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 
+app.use(cors())
+app.use(express.static('dist'))
 app.use(express.json())
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 
 let persons = [
     { 
@@ -59,14 +62,17 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.delete('/api/persons/:id',(request,response)=>{
     const id = request.params.id
     persons = persons.filter(person=>person.id !== id)
+  
     
     response.status(204).end()
+    // response.json(request.body)
 })
 
 app.post('/api/persons',(request,response)=>{
   const body = request.body
-  const id = Math.random()*1000
+  const id = Math.floor(Math.random()*1000)
   const nameCheck = persons.map(person=>person.name)
+
 
   if(!body.name || !body.number){
     response.status(404).json({error:'name or number is missing'})
@@ -76,7 +82,7 @@ app.post('/api/persons',(request,response)=>{
   }
   else{
     const person = {
-      id:id,
+      id:id.toString(),
       name:body.name,
       number:body.number
     }

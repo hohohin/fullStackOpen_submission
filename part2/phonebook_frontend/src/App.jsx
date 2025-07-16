@@ -6,7 +6,8 @@ import Filter from './components/Filter'
 import Notification from './components/Notification'
 import './index.css'
 
-const baseUrl = 'http://localhost:3001/contacts'
+const baseUrl = '/api/persons'
+// const baseUrl = 'http://localhost:3001/contacts'
 
 
 function App() {
